@@ -67,6 +67,6 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true, // usando gzip
-        port: 8080,
+        port: 9150,
     },
 }
