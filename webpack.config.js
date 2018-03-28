@@ -4,12 +4,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
-    filename: '[name].bundle.css',
+    filename: '[name].css',
     disable: process.env.NODE_ENV === "development"
 });
 
 const htmlPlugin =  new HtmlWebpackPlugin({
-    template: path.join(__dirname, 'index.html'),
+    template: path.join(__dirname, 'src', 'index.html'),
     hash: false,
     publicPath: '/',
 });
@@ -41,13 +41,20 @@ const rules = {
 };
 
 module.exports = {
+    mode: "development",
     entry: {
         app: [
-            './app.js',
-            './style.scss',
+            './src/app.js',
+            './src/style.scss',
+        ],
+        sw: [
+            './src/sw.js',
         ]
     },
-    mode: "development",
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
+    },
     module: {
         rules: [
             rules.scss
@@ -58,8 +65,8 @@ module.exports = {
         htmlPlugin,
     ],
     devServer: {
-        contentBase: path.join(__dirname),
+        contentBase: path.join(__dirname, 'dist'),
         compress: true, // usando gzip
-        port: 9000,
+        port: 8080,
     },
 }
